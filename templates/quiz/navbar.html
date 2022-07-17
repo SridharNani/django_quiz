@@ -1,0 +1,47 @@
+{% load static %}
+
+<style>
+  .greet {
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home'%}">Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_superuser %}
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            aria-current="page"
+            href="{% url 'addQuestion' %}"
+            >Add Question</a
+          >
+        </li>
+        {% endif %}
+      </ul>
+      <div class="d-flex">
+        {% if user.is_authenticated %}
+        <span class="nav-link navbar-brand">Hello, {{request.user}}</span>
+        <a class="btn btn-outline-success" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <a class="btn btn-outline-success" href="{% url 'login' %}">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

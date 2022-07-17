@@ -1,0 +1,93 @@
+{% extends 'quiz/dependencies.html' %} {% block content %} {% load static %}
+<div class="container">
+  
+
+  <div class="display-5 mt-5" align="right" id="displaytimer"></div>
+
+  <form method="post" action="" id="myform">
+    {% csrf_token %} {% for q in questions%}
+
+    <div class="form-group">
+      <label for="question">{{q.question}}</label>
+    </div>
+    <div class="form-check">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="quest{{q.id}}"
+          id="gridRadios1"
+          value="option1"
+        />
+        <label class="form-check-label" for="gridRadios1"> {{q.op1}} </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="quest{{q.id}}"
+          id="gridRadios2"
+          value="option2"
+        />
+        <label class="form-check-label" for="gridRadios2"> {{q.op2}} </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="quest{{q.id}}"
+          id="gridRadios1"
+          value="option3"
+        />
+        <label class="form-check-label" for="gridRadios1"> {{q.op3}} </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="quest{{q.id}}"
+          id="gridRadios2"
+          value="option4"
+        />
+        <label class="form-check-label" for="gridRadios2"> {{q.op4}} </label>
+      </div>
+      <br />
+    </div>
+    {% endfor %}
+    <input id="timer" type="hidden" name="timer" value="" />
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %} {% block script %}
+<script>
+  var timer2 = "5:00";
+  var interval = setInterval(function () {
+    var timer = timer2.split(":");
+    //by parsing integer, I avoid all extra string processing
+    var minutes = parseInt(timer[0], 10);
+    var seconds = parseInt(timer[1], 10);
+    console.log(seconds);
+    --seconds;
+    minutes = seconds < 0 ? --minutes : minutes;
+    if (minutes < 0) clearInterval(interval);
+    console.log(seconds);
+    seconds = seconds < 0 ? 59 : seconds;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    //minutes = (minutes < 10) ?  minutes : minutes;
+    var a = minutes + ":" + seconds;
+    $("#displaytimer").html("Timer: " + minutes + ":" + seconds);
+    if (a === "1:00") {
+      alert("Remaining time : " + a);
+    } else if (a === "0:00") {
+      $("#displaytimer").html("Timer: 0:00");
+      alert("Test Finished!!");
+      document.getElementById("myform").submit();
+    }
+    console.log(a);
+
+    //console.log(minutes,seconds);
+    timer2 = minutes + ":" + seconds;
+  }, 1000);
+</script>
+{% endblock script %}

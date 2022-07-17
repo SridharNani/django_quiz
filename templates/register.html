@@ -1,0 +1,15 @@
+{% extends 'quiz/dependencies.html' %} {% load static %} {% block content %}
+<div class="container mt-5">
+    
+    <div style="margin:auto;width:700px" class="card p-4">
+        <h4 style="color:red">Registration</h4>
+        <hr>
+    
+  <form method="POST" action="">
+    {% csrf_token %} {{form.as_p}}
+
+    <input class="btn btn-success" type="submit" value="Register Account" />
+  </form>
+</div>
+</div>
+{% endblock %}
